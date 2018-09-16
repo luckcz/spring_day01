@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.springframework.org/schema/beans"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+	<!-- 将User对象交给spring容器管理 -->
+	<!-- Bean 元素：使用该元素描述需要spring管理的对象
+			name属性：给被管理的对象起名字，获得对象时根据名称获得对象，名称可以重复，可以使用特殊字符
+			class属性：被管理对象的完整类名
+			id属性：与name属性一模一样，名称不可重复，不能使用特殊字符
+	 -->
+	<bean name = "user" class="com.kaicom.bean.User">
+		<property name="name" value="tom"></property>
+		<property name="age" value="12"></property>
+	</bean>
+	<bean name = "user" class="com.kaicom.bean.Teacher">
+		<property name="t_name" value="hello"></property>
+		<property name="age" value="18"></property>
+	</bean>
+</beans>

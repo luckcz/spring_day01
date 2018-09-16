@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+	<!-- set方式注入： -->
+	<bean name = "user" class="com.kaicom.bean.User">
+		<property name="name" value="tom"></property>
+		<property name="age" value="12"></property>
+	</bean>
+	<!-- 将user配置到teacher中 -->
+	<bean name = "teacher" class="com.kaicom.bean.Teacher">
+		<!-- 值类型注入 -->
+		<property name="t_name" value="hyf"></property>
+		<property name="t_age" value="24"></property>
+		<!-- 引用类型注入 -->
+		<property name="user" ref="user"></property>
+	</bean>
+	<!-- ========================================================================= -->
+	<!-- 构造函数注入
+		name属性：构造函数参数名
+		index属性：构造函数的参数索引，主要标记首先执行哪个构造
+		type属性：构造函数的参数类型，主要标记首先执行哪个构造
+	 -->
+	<bean name = "teacher2" class="com.kaicom.bean.Teacher">
+		<constructor-arg name = "t_name" value="19" index="0" type="java.lang.Integer"></constructor-arg>
+		<constructor-arg name = "user" ref="user" index="1"></constructor-arg>
+	</bean>
+	<!-- ========================================================================= -->
+	
+	<!-- p名称空间注入 走set方法
+		1.导入p名称空间 xmlns:p="http://www.springframework.org/schema/p"
+		2.使用p:属性名="值"
+			|-值类型：p:属性名="值"
+			|-对象类型：p:属性名-ref="bean名称"
+	 -->
+	<bean name = "teacher3" class = "com.kaicom.bean.Teacher" p:t_name="jack" p:t_age="17" p:user-ref = "user"></bean>
+	
+	<!-- SPEL注入：spring expression language spring表达式 -->
+	<bean name = "user4" class="com.kaicom.bean.User">
+		<property name="name" value="#{user.name}"></property>
+		<property name="age" value="#{teacher.t_age}"></property>
+	</bean>
+	
+	<!-- ========================================================================= -->
+	<!-- 复杂类型注入 -->
+	<!-- array 注入 -->
+	<bean name = "cb" class="com.kaicom.di.CollectionBean">
+		<!-- 如果数组中只准备注入一个值（对象），就可以直接使用value 或者ref指定对应的值
+		<property name="arr" value="tom"></property>
+		 -->
+		 <property name="arr">
+		 <!-- array注入，多个属性注入 -->
+		 	<array>
+		 		<value>tom</value>
+		 		<value>jerry</value>
+		 		<ref bean="user4" />
+		 	</array>
+		 </property>
+		 <!-- list类型注入 -->
+		 <!-- 如果数组中只准备注入一个值（对象），就可以直接使用value 或者ref指定对应的值
+		 <property name="list" value="jack"></property>
+		 -->
+		 <property name="list">
+		 	<list>
+		 		<value>jack</value>
+		 		<value>rose</value>
+		 		<ref bean="user4"/>
+		 	</list>
+		 </property>
+		 
+		 <!-- map类型注入 -->
+		 <property name="map">
+		 	<map>
+		 		<entry key="url" value="jdbc:mysql:///crm"></entry>
+		 		<entry key="user" value-ref="user4"></entry>
+		 		<entry key-ref="user" value-ref="user4"></entry>
+		 	</map>
+		 </property>
+		 <!-- properties类型注入 -->
+		 <property name="prop">
+		 	<props>
+		 		<prop key="driverClass">com.jdbc.mysql.Driver</prop>
+		 		<prop key="userName">root</prop>
+		 		<prop key="password">12345678</prop>
+		 	</props>
+		 </property>
+	</bean>
+</beans>

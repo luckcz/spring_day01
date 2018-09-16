@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.springframework.org/schema/beans"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+	<!-- singleton默认值：单例对象，被标识为单例的对象在spring容器中只会存在一个实例 -->
+	<!-- prototype：多例原型，被标识为多例的对象，每次在获得才会创建，每次创建都是新的对象，整合struts2时，ActionBean必须要多例 -->
+	<!-- 以下为了解 -->
+	<!-- request:web环境下，对象与request生命周期一致-->
+	<!-- session:web环境下，对象与session生命周期一致-->
+	<bean name = "user" class="com.kaicom.bean.User" scope="singleton"></bean>
+	<bean name = "teacher" class="com.kaicom.bean.Teacher" scope="prototype"></bean>
+	<import resource="com/kaicom/life/applicationContext.xml"/>
+</beans>
